@@ -24,13 +24,13 @@ class App extends Component {
   render() {
     const { store } = this.props
     store.lists.forEach(list => {
-      list.cardIds = list.cardIds.map(cardId => {
+      list.cards = list.cardIds.map(cardId => {
         return store.allCards[cardId];
       });
     });
 
     const lists = store.lists.map(list => {
-      return <List header={list.header} key={list.id} cards={list.cardIds} />
+      return <List header={list.header} key={list.id} cards={list.cards} />
     });
 
     return (
