@@ -4,7 +4,7 @@ import Card from './Card.js'
 
 export default function List(props){
     const cards = props.cards.map(card =>{
-        <Card title={card.title} key={card.id} content={card.content}/>
+       return <Card title={card.title} key={card.id} content={card.content}/>
     });
     return (
         <section className="List">
@@ -14,9 +14,11 @@ export default function List(props){
             <div className="List-cards">
                 {cards}
             </div>
+            <button type="button" class="List-add-button">
+              + Add Random Card
+            </button>
         </section>
     )
 }
 
 
-//{ id: 'a', title: 'First card', content: 'lorem ipsum' }
