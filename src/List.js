@@ -14,7 +14,7 @@ export default function List(props){
             <div className="List-cards">
                 {cards}
             </div>
-            <button type="button" class="List-add-button">
+            <button type="button" className="List-add-button">
               + Add Random Card
             </button>
         </section>
