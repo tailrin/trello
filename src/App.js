@@ -16,13 +16,30 @@ class App extends Component {
     lists: this.renderLists(this.props.store)
   }
 
+  newRandomCard = () => {
+    const id = Math.random().toString(36).substring(2, 4)
+      + Math.random().toString(36).substring(2, 4);
+    return {
+      id,
+      title: `Random Card ${id}`,
+      content: 'lorem ipsum',
+    }
+  }
+
+  addNewRandomCard(listId){
+    const newCard = this.newRandomCard()
+    const localStore = JSON.parse(JSON.stringify(this.state.store));
+    const listIndex = localStore.lists.findIndex(list => {return listId === list.id});
+    localStore.allCards[newCard.id] = newCard
+    localStore.lists[listIndex].cardIds.push(newCard.id)
+    this.setState({store: JSON.parse(JSON.stringify(localStore)), lists: this.renderLists(JSON.parse(JSON.stringify(localStore)))});
+  }
+
   removeItem(cardId, listId){
     const localStore = JSON.parse(JSON.stringify(this.state.store));
-    console.log(localStore.lists[0].cards)
     const listIndex = localStore.lists.findIndex(list => {return listId === list.id});
     const cardIdIndex = localStore.lists[listIndex].cardIds.findIndex(cardId0 => {return cardId === cardId0});
     localStore.lists[listIndex].cardIds.splice(cardIdIndex, 1);
-    console.log(localStore)
     this.setState({store: JSON.parse(JSON.stringify(localStore)), lists: this.renderLists(JSON.parse(JSON.stringify(localStore)))});
   }
 
@@ -33,7 +50,7 @@ class App extends Component {
       });
     });
     const lists = data.lists.map(list => {
-      return <List header={list.header} key={list.id} id={list.id} cards={list.cards} handler={this.removeItem.bind(this)}/>
+      return <List header={list.header} key={list.id} id={list.id} cards={list.cards} handler={this.removeItem.bind(this)} addNewRandomCard={this.addNewRandomCard.bind(this)}/>
     });
     data.lists.forEach(list => {delete list["cards"]})
     return lists
