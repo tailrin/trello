@@ -9,12 +9,6 @@ class List extends React.Component{
         cards: []
     }
 
-    // state = {
-    //     cards: this.props.cards.map((card) =>{
-    //         return <Card title={card.title} key={card.id} id={card.id} listId={this.props.id} content={card.content} handler={this.removeItem.bind(this)}/>
-    //      })
-    // }
-
     removeItem(cardId, listId){
         const localCards = this.state.cards.slice(0);
         const index = localCards.findIndex(card => {return card.props.id === cardId});
