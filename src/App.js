@@ -16,6 +16,14 @@ class App extends Component {
     lists: this.renderLists(this.props.store)
   }
 
+  omit(obj, keyToOmit) {
+    return Object.entries(obj).reduce(
+      (newObj, [key, value]) =>
+          key === keyToOmit ? newObj : {...newObj, [key]: value},
+      {}
+    );
+  }
+
   newRandomCard = () => {
     const id = Math.random().toString(36).substring(2, 4)
       + Math.random().toString(36).substring(2, 4);
@@ -40,6 +48,7 @@ class App extends Component {
     const listIndex = localStore.lists.findIndex(list => {return listId === list.id});
     const cardIdIndex = localStore.lists[listIndex].cardIds.findIndex(cardId0 => {return cardId === cardId0});
     localStore.lists[listIndex].cardIds.splice(cardIdIndex, 1);
+    this.omit(localStore.allCards, cardId);
     this.setState({store: JSON.parse(JSON.stringify(localStore)), lists: this.renderLists(JSON.parse(JSON.stringify(localStore)))});
   }
 
