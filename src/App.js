@@ -40,7 +40,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.lists)
     return (
       <main className='App'>
         <header className="App-header">
